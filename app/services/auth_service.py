@@ -6,6 +6,8 @@ from jose import jwt, JWTError
 from fastapi import HTTPException
 from app.core.db import get_db
 import uuid
+from fastapi import status
+
 
 SECRET_KEY = "your_secret_key"
 ALGORITHM = "HS256"
@@ -18,16 +20,27 @@ def create_access_token(data: dict):
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 def signup_user(request: SignupRequest, db: Session):
+    try:
+        existing_user = db.query(User).filter(User.email == request.email).first()
+        if existing_user:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Email already registered"
+            )
+        user_id = str(uuid.uuid4())
+        token = create_access_token({"sub": user_id})
+        password_hash = request.password
+        new_user = User(user_id=user_id, email=request.email, password_hash=password_hash, token=token)
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+        return {"user_id": new_user.user_id, "email": new_user.email, "access_token": token, "token_type": "bearer"}
 
-    user_id = str(uuid.uuid4())
-    token = create_access_token({"sub": user_id})
-    password_hash = request.password
-    new_user = User(user_id=user_id, email=request.email, password_hash=password_hash, token=token)
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-    
-    return {"user_id": new_user.user_id, "email": new_user.email, "access_token": token, "token_type": "bearer"}
+    except Exception as e:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"An error occurred while creating the user: {str(e)}"
+            )
 
 
 def login_user(request: LoginRequest, db: Session):
