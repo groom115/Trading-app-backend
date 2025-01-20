@@ -9,7 +9,7 @@ Base.metadata.create_all(bind=engine)
 
 # Include routers
 app.include_router(auth_routes.router, prefix="/auth", tags=["Authentication"])
-app.include_router(file_routes.router, prefix="/file", tags=["file"])
+app.include_router(file_routes.router, prefix="/table", tags=["file"])
 app.include_router(random_number_routes.router, prefix="/numbers", tags=["numbers"])
 # app.include_router(random_number.router, prefix="/random", tags=["Random Numbers"])
 # app.include_router(file_operations.router, prefix="/csv", tags=["CSV Operations"])
