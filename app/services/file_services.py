@@ -36,7 +36,7 @@ def add_csv_row(row: File):
         return {"message": "Row added successfully."}
 
 def update_csv_row(row_id: int, row: File):
-    with Lock:
+    with lock:
         backup_csv()
         rows = fetch_csv()
         if row_id < 1 or row_id > len(rows):
@@ -50,10 +50,10 @@ def update_csv_row(row_id: int, row: File):
 
 
 def delete_csv_row(row_id: int):
-    with Lock:
+    with lock:
         backup_csv()
         rows = fetch_csv()
-        if row_id < 1 or row_id >= len(rows):
+        if row_id < 1 or row_id > len(rows):
             return {"message": "Invalid row index."}
         rows.pop(row_id-1)
         with open(CSV_FILE, mode="w", newline="") as file:
