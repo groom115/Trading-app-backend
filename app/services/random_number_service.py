@@ -10,7 +10,7 @@ import time
 def add_random_number(db: Session):
     
     print('called')
-    random_number = random.randint(1, 10000000000)
+    random_number = random.randint(1, 1000000)
     timestamp = datetime.now()
     new_random_number = RandomNumber(timestamp=timestamp, number=random_number)
     db.add(new_random_number)
@@ -29,5 +29,5 @@ def start_random_number_generator():
         
 
 def get_latest_random_numbers(db: Session):
-    latest_random_numbers = db.query(RandomNumber).order_by(RandomNumber.timestamp.desc()).limit(50).all()
+    latest_random_numbers = db.query(RandomNumber).order_by(RandomNumber.timestamp.desc()).all()
     return latest_random_numbers
