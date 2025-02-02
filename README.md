@@ -9,7 +9,7 @@ Tech: Python, FastAPI
 ```bash
 
 #clone repo
-git clone
+git clone https://github.com/groom115/Trading-app-backend.git
 cd trading-app-backend
 
 #create virtual env
