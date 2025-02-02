@@ -22,3 +22,18 @@ pip install -r requirements.txt
 # For running locally
 uvicorn app.main:app --reload
 
+## Different routes
+
+```bash
+
+Auth: post /login Payload: [email, password]
+      post /signup Payload: [email, password]
+
+Table: post /table (for adding table)
+       get /table (for fetching table)
+       put /table?row_id (for updating table)
+       del /table (for deleting table)
+       get /table/restore (for restoring table)
+
+Random Number: get /numbers (for fetching random numbers)
+
