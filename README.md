@@ -1,6 +1,6 @@
 ## Trading-app-backend
 
-Deployed base url: https://trading-app-backend-4.onrender.com
+Deployed base url: https://trading-app-backend-4.onrender.com.
 Tech: Python, fastApi
 
 ## How to run locally
