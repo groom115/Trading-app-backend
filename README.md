@@ -22,6 +22,8 @@ pip install -r requirements.txt
 # For running locally
 uvicorn app.main:app --reload
 
+```
+
 ## Different routes
 
 ```bash
