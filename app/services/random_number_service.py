@@ -21,7 +21,7 @@ def generate_random_numbers_continuously():
     db = next(get_db())
     while True:
         add_random_number(db)
-        time.sleep(60)
+        time.sleep(10)
 
 def start_random_number_generator():
     thread = threading.Thread(target=generate_random_numbers_continuously, daemon=True)
